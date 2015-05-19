@@ -3,10 +3,28 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 <script>
-    document.write(window.location.toString());
+    if(window.localStorage.getItem('avant_token',false)){
+        window.location.href = '/issues.html';
+    }
+    else{
+        $.get(
+            'http://githubauth.chasenoel.com?code='+getParameterByName('code'),
+             function(data){
+                 console.log(data);
+                 //document.write(window.location.toString());
+             }
+        )
+    }
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
 </script>
 </body>
 </html>
